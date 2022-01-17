@@ -4,7 +4,6 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 configure do
-  set :default_content_type, :json
   set :public_folder, "#{__dir__}/static"
 end
 
