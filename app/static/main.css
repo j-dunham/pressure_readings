@@ -1,0 +1,10 @@
+body {
+    text-align: center;
+    margin-top: 5em;  
+}
+
+h1,p {
+    font-family: 'Rye', cursive;
+}
+
+.material-icons.md-60 { font-size: 60px; }

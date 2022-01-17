@@ -1,0 +1,4 @@
+*.sqlite
+.env
+env.yml
+.DS_STORE
