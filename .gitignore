@@ -2,3 +2,4 @@
 .env
 env.yml
 .DS_STORE
+.idea
