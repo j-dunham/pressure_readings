@@ -11,3 +11,8 @@ get '/' do
   content_type 'text/html'
   erb :index, locals: { message: 'Welcome<br>To<br>Null Island<br>' }
 end
+
+get '/location' do
+  content_type 'application/json'
+  { 'location' => '0,0' }.to_json
+end
