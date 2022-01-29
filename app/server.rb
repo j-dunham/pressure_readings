@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require 'rack'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'dotenv'
+
+Dotenv.load
 
 configure do
   set :public_folder, "#{__dir__}/static"
@@ -13,6 +17,10 @@ get '/' do
 end
 
 get '/location' do
+  status 401
+  return erb :not_allow unless validate_token(request)
+
+  status 200
   content_type 'application/json'
   { 'location' => '0,0' }.to_json
 end
@@ -20,4 +28,9 @@ end
 not_found do
   status 404
   erb :not_found
+end
+
+def validate_token(request)
+  token = request.env['HTTP_AUTHORIZATION']
+  token == ENV['SECRET_TOKEN']
 end
