@@ -16,7 +16,7 @@ jobs:
           ruby-version: 2.7
           bundler-cache: true
       - name: run tests
-        run: rspec .
+        run: bundle exec rspec
   deploy:
     needs: test 
     runs-on: ubuntu-latest
