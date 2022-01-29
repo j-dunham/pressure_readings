@@ -1,0 +1,28 @@
+name: Deploy To Heroku
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: install heroku
+        run: sudo snap install --classic heroku
+      - name: deploy via git
+        run: |
+          heroku_url="https://heroku:${{ env.HEROKU_API_KEY}}@git.heroku.com/${{ env.APP_NAME}}.git"
+          heroku login
+          git push $heroku_url ${{ env.BRANCH }}:main
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          APP_NAME: nullisland
+          BRANCH: main
+          
