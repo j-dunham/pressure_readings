@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: install heroku
-        run: sudo snap install --classic heroku
+        run: which heroku
       - name: deploy via git
         run: |
           heroku_url="https://heroku:${{ env.HEROKU_API_KEY}}@git.heroku.com/${{ env.APP_NAME}}.git"
