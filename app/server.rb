@@ -16,3 +16,8 @@ get '/location' do
   content_type 'application/json'
   { 'location' => '0,0' }.to_json
 end
+
+not_found do
+  status 404
+  erb :not_found
+end
