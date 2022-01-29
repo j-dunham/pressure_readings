@@ -7,5 +7,9 @@ gem 'sequel'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'rack-test'
-gem 'rspec'
 gem 'dotenv'
+
+group :development do
+  gem 'rspec'
+  gem 'sqlite3'
+end
