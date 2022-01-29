@@ -6,15 +6,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - name: run tests
+        run: rspec .
   deploy:
+    needs: test 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: install heroku
-        run: which heroku
-      - name: deploy via git
+      - name: deploy to heroku
         run: |
           heroku_url="https://heroku:${{ env.HEROKU_API_KEY}}@git.heroku.com/${{ env.APP_NAME}}.git"
           git push $heroku_url ${{ env.BRANCH }}:main
