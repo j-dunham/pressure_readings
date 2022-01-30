@@ -10,7 +10,7 @@ describe 'the server' do
   include Rack::Test::Methods
 
   def app
-    Sinatra::Application
+    Server
   end
 
   describe 'when calling /' do
