@@ -1,8 +1,7 @@
 name: heroku_deploy_via_git
 inputs:
   api_key:
-    required: false
-    default: HEROKU_API_KEY
+    required: true
   app_name:
     required: false
     default: HEROKU_APP_NAME
@@ -23,7 +22,7 @@ runs:
   steps:
   - shell: bash
     env:
-      API_KEY_NAME: "${{ inputs.api_key }}"
+      API_KEY: "${{ inputs.api_key }}"
       BRANCH: "${{ inputs.branch }}"
       TAG: "${{ inputs.tag }}"
       FORCE: "${{ inputs.force }}"
@@ -31,7 +30,7 @@ runs:
       MAINTENANCE_MODE: "${{ inputs.maintenance_mode }}"
     run: |-
       if ${{ env.FORCE }};then force="-f"; fi
-      heroku_url="https://heroku:$${{ env.API_KEY_NAME }}@git.heroku.com/${{ env.APP_NAME }}.git"
+      heroku_url="https://heroku:${{ env.API_KEY_NAME }}@git.heroku.com/${{ env.APP_NAME }}.git"
 
       if ${{ env.MAINTENANCE_MODE }}; then heroku maintenance:on --app ${{ env.APP_NAME }}; fi
       if [ -n "${{ env.BRANCH }}" ]; then
@@ -41,4 +40,3 @@ runs:
       else
         echo "No branch or tag found."
       fi
-      if ${{ env.MAINTENANCE_MODE }}; then heroku maintenance:off --app ${{ env.APP_NAME }}; fi
