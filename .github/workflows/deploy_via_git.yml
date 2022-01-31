@@ -1,0 +1,23 @@
+name: valet-dev-testing/circle-demo/build
+on: workflow_dispatch
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - shell: bash
+      run: |-
+        if [[ $(command -v heroku) == "" ]]; then
+          curl https://cli-assets.heroku.com/install.sh | sh
+        else
+          echo "Heroku is already installed. No operation was performed."
+        fi
+    - uses: "./.github/actions/heroku_deploy_via_git"
+      timeout-minutes: 10
+      with:
+        api_key: HEROKU_API_KEY
+        app_name: nullisland
+        branch: dev
+        maintenance_mode: true
