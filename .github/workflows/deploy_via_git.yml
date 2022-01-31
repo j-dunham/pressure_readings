@@ -19,5 +19,4 @@ jobs:
       with:
         api_key: "${{ secrets.HEROKU_API_KEY }}"
         app_name: nullisland
-        branch: main
         maintenance_mode: false
