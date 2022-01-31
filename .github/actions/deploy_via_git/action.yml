@@ -22,7 +22,7 @@ runs:
   steps:
   - shell: bash
     env:
-      API_KEY: "${{ inputs.api_key }}"
+      HEROKU_API_KEY: "${{ inputs.api_key }}"
       BRANCH: "${{ inputs.branch }}"
       TAG: "${{ inputs.tag }}"
       FORCE: "${{ inputs.force }}"
@@ -40,3 +40,4 @@ runs:
       else
         echo "No branch or tag found."
       fi
+      if ${{ env.MAINTENANCE_MODE }}; then heroku maintenance:off --app ${{ env.APP_NAME }}; fi
