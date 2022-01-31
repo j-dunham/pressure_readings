@@ -30,7 +30,7 @@ runs:
       MAINTENANCE_MODE: "${{ inputs.maintenance_mode }}"
     run: |-
       if ${{ env.FORCE }};then force="-f"; fi
-      heroku_url="https://heroku:${{ env.API_KEY_NAME }}@git.heroku.com/${{ env.APP_NAME }}.git"
+      heroku_url="https://heroku:${{ env.HEROKU_API_KEY }}@git.heroku.com/${{ env.APP_NAME }}.git"
 
       if ${{ env.MAINTENANCE_MODE }}; then heroku maintenance:on --app ${{ env.APP_NAME }}; fi
       if [ -n "${{ env.BRANCH }}" ]; then
