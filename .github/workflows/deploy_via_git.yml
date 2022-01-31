@@ -1,4 +1,4 @@
-name: deloy_via_git
+name: Deploy Via Git Composite Action
 on: workflow_dispatch
 jobs:
   example:
