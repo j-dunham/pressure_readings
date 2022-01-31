@@ -20,7 +20,7 @@ class Server < Sinatra::Base
 
   get '/' do
     content_type 'text/html'
-    erb :index, locals: { message: 'Welcome<br>~To~<br>Null Island<br>' }
+    erb :index, locals: { message: 'Welcome<br> To <br>Null Island<br>' }
   end
 
   get '/api/locations' do
