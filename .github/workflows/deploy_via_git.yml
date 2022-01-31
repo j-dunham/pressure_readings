@@ -17,7 +17,7 @@ jobs:
     - uses: "./.github/actions/deploy_via_git"
       timeout-minutes: 10
       with:
-        api_key: HEROKU_API_KEY
+        api_key: "${{ secrets.HEROKU_API_KEY }}"
         app_name: nullisland
-        branch: dev
+        branch: main
         maintenance_mode: true
