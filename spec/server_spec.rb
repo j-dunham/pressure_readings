@@ -4,6 +4,7 @@ ENV['DATABASE_URL'] = 'sqlite://test.db'
 
 require 'rspec'
 require 'rack/test'
+require 'sequel'
 require_relative '../app/server'
 
 describe 'the server' do

@@ -3,17 +3,11 @@
 require 'rack'
 require 'sinatra/base'
 require 'sinatra/reloader'
-require 'dotenv'
 require 'sequel'
 
-Dotenv.load
+require_relative 'models'
 
 class Server < Sinatra::Base
-  def initialize
-    @db = Sequel.connect(ENV['DATABASE_URL'])
-    super()
-  end
-
   configure do
     set :public_folder, "#{__dir__}/static"
   end
@@ -23,11 +17,11 @@ class Server < Sinatra::Base
     erb :index, locals: { message: 'Welcome<br> To <br>Null Island<br>' }
   end
 
-  get '/api/locations' do
+  get '/api/links' do
     if valid_token? request
       status 200
       content_type 'application/json'
-      @db[:locations].all.to_json
+      Links.all.map(&:values).to_json
     else
       status 401
       erb :not_allow
