@@ -8,7 +8,7 @@ Dotenv.load
 DB = Sequel.connect(ENV['DATABASE_URL'])
 
 DB.create_table? :links do
-  column :id, Integer, primary_key: true
+  primary_key :id
   column :name, String, unique: true, null: false
   column :url, String
   column :description, String
@@ -16,7 +16,7 @@ DB.create_table? :links do
 end
 
 DB.create_table? :books do
-  column :id, Integer, primary_key: true
+  primary_key :id
   column :name, String, unique: true, null: false
   column :author, String
   column :url, String
