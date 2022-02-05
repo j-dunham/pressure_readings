@@ -18,19 +18,27 @@ class Server < Sinatra::Base
   end
 
   get '/api/links' do
-    if valid_token? request
-      status 200
-      content_type 'application/json'
-      Links.all.map(&:values).to_json
-    else
-      status 401
-      erb :not_allow
-    end
+    return unauthorized unless valid_token? request
+
+    content_type 'application/json'
+    Links.all.map(&:values).to_json
+  end
+
+  get '/api/books' do
+    return unauthorized unless valid_token? request
+
+    content_type 'application/json'
+    Books.all.map(&:values).to_json
   end
 
   not_found do
     status 404
     erb :not_found
+  end
+
+  def unauthorized
+    status 401
+    erb :not_allow
   end
 
   def valid_token?(request)
