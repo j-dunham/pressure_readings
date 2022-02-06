@@ -24,11 +24,25 @@ class Server < Sinatra::Base
     Links.all.map(&:values).to_json
   end
 
+  post '/api/links' do
+    return unauthorized unless valid_token? request
+
+    Links.create(**request.params)
+    201
+  end
+
   get '/api/books' do
     return unauthorized unless valid_token? request
 
     content_type 'application/json'
     Books.all.map(&:values).to_json
+  end
+
+  post '/api/books' do
+    return unauthorized unless valid_token? request
+
+    book = Books.create(**request.params)
+    201
   end
 
   not_found do
