@@ -4,10 +4,13 @@ require 'rack'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sequel'
+require 'twilio-ruby'
 
 require_relative 'models'
 
 class Server < Sinatra::Base
+  use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/twilio'
+
   configure do
     set :public_folder, "#{__dir__}/static"
   end
@@ -17,32 +20,38 @@ class Server < Sinatra::Base
     erb :index, locals: { message: 'Welcome<br> To <br>Null Island<br>' }
   end
 
-  get '/api/links' do
+  get '/api/pressure_reading' do
     return unauthorized unless valid_token? request
 
     content_type 'application/json'
-    Links.all.map(&:values).to_json
+    PressureReading.all.map(&:values).to_json
   end
 
-  post '/api/links' do
+  post '/api/pressure_reading' do
     return unauthorized unless valid_token? request
 
-    Links.create(**request.params)
+    PressureReading.create(**request.params)
     201
   end
 
-  get '/api/books' do
-    return unauthorized unless valid_token? request
-
-    content_type 'application/json'
-    Books.all.map(&:values).to_json
+  delete '/api/pressure_reading/:id' do |id|
+    PressureReading[id]&.delete
+    200
   end
 
-  post '/api/books' do
-    return unauthorized unless valid_token? request
-
-    book = Books.create(**request.params)
-    201
+  post '/twilio/message' do
+    content_type 'text/xml'
+    if params['Body'][0..3].match?(/[0-9]+/)
+      systolic, diastolic = params['Body'].split(',')
+      PressureReading.create(systolic: systolic, diastolic: diastolic)
+      message = 'Saved'
+    elsif params['Body'].casecmp('last')
+      reading = PressureReading.order(:created_at).last
+      message = "#{reading.systolic}/#{reading.diastolic}"
+    end
+    response = Twilio::TwiML::MessagingResponse.new
+    response.message(body: message)
+    response.to_s
   end
 
   not_found do

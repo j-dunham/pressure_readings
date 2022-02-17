@@ -8,6 +8,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'rack-test'
 gem 'dotenv'
+gem 'twilio-ruby'
 
 group :development do
   gem 'rspec'
