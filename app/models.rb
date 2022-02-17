@@ -11,7 +11,7 @@ DB.create_table? :pressure_readings do
   primary_key :id
   column :systolic, String
   column :diastolic, String
-  column :created_at, DateTime, default: Sequel.function(:now)
+  column :created_at, 'timestamp with time zone', default: Sequel.function(:now)
 end
 
 class PressureReading < Sequel::Model
