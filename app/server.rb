@@ -20,6 +20,10 @@ class Server < Sinatra::Base
     erb :index, locals: { message: 'Welcome<br> To <br>Null Island<br>' }
   end
 
+  get '/home' do
+    markdown '#Testing ##this works'
+  end
+
   get '/api/pressure_reading' do
     return unauthorized unless valid_token? request
 
