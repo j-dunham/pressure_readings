@@ -10,6 +10,7 @@ require_relative 'models'
 
 class Server < Sinatra::Base
   use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/twilio'
+  enable :sessions
 
   configure do
     set :public_folder, "#{__dir__}/static"
@@ -20,15 +21,14 @@ class Server < Sinatra::Base
     erb :index, locals: { message: 'Welcome<br> To <br>Null Island<br>' }
   end
 
-  get '/home' do
-    markdown '#Testing ##this works'
+  get '/login' do
+    erb :login
   end
 
-  get '/api/pressure_reading' do
-    return unauthorized unless valid_token? request
+  get '/pressure_reading' do
+    @readings = PressureReading.all
 
-    content_type 'application/json'
-    PressureReading.all.map(&:values).to_json
+    erb :readings
   end
 
   post '/api/pressure_reading' do

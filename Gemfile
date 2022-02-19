@@ -2,12 +2,13 @@
 
 source 'https://rubygems.org'
 
+gem 'bcrypt'
+gem 'dotenv'
 gem 'pg'
+gem 'rack-test'
 gem 'sequel'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'rack-test'
-gem 'dotenv'
 gem 'twilio-ruby'
 
 group :development do

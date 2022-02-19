@@ -1,0 +1,22 @@
+<%= erb :header %>
+<body>
+<h1>Readings</h1>
+<table class="table">
+  <thead>
+  <th>Created At</th>
+  <th>Systolic</th>
+  <th>Diastolic</th>
+  </thead>
+  <tbody>
+  <% @readings.each do |reading| %>
+    <tr>
+      <td><%= reading.created_at %></td>
+      <td><%= reading.systolic %></td>
+      <td><%= reading.diastolic %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+</ul>
+</body>
