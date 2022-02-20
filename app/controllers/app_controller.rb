@@ -15,11 +15,20 @@ class AppController < Sinatra::Base
     set :views, 'app/views'
   end
 
+  helpers do
+    def current_user
+      session[:username]
+    end
+
+    def valid_token?(request)
+      request.env['HTTP_AUTHORIZATION'] == ENV['SECRET_TOKEN']
+    end
+  end
+
   get '/' do
     content_type 'text/html'
-    @is_logged_in = !session[:username].nil?
-    @message = 'Welcome<br> To <br>Null Island<br>'
-    erb :index
+    @message = "Welcome<br> To <br>Null Island<br>#{current_user}"
+    erb :index, { locals: { is_logged_in: !current_user.nil? } }
   end
 
   get '/login' do
@@ -50,10 +59,5 @@ class AppController < Sinatra::Base
   def unauthorized
     status 401
     erb :not_allow
-  end
-
-  def valid_token?(request)
-    token = request.env['HTTP_AUTHORIZATION']
-    token == ENV['SECRET_TOKEN']
   end
 end
