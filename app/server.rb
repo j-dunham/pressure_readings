@@ -5,6 +5,7 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sequel'
 require 'twilio-ruby'
+require 'bcrypt'
 
 require_relative 'models'
 
@@ -22,6 +23,16 @@ class Server < Sinatra::Base
   end
 
   get '/login' do
+    erb :login
+  end
+
+  post '/login' do
+    user = User.where(username: params[:username]).first
+    @message = if user && BCrypt::Password.new(user.password) == params[:password]
+                 'Found'
+               else
+                 'Not Found'
+               end
     erb :login
   end
 
