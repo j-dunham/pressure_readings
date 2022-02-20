@@ -7,34 +7,10 @@ require 'sequel'
 require 'twilio-ruby'
 require 'bcrypt'
 
-require_relative 'models'
+require_relative '../db/models'
 
-class Server < Sinatra::Base
+class PressureController < AppController
   use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/twilio'
-  enable :sessions
-
-  configure do
-    set :public_folder, "#{__dir__}/static"
-  end
-
-  get '/' do
-    content_type 'text/html'
-    erb :index, locals: { message: 'Welcome<br> To <br>Null Island<br>' }
-  end
-
-  get '/login' do
-    erb :login
-  end
-
-  post '/login' do
-    user = User.where(username: params[:username]).first
-    @message = if user && BCrypt::Password.new(user.password) == params[:password]
-                 'Found'
-               else
-                 'Not Found'
-               end
-    erb :login
-  end
 
   get '/pressure_reading' do
     @readings = PressureReading.all
@@ -67,20 +43,5 @@ class Server < Sinatra::Base
     response = Twilio::TwiML::MessagingResponse.new
     response.message(body: message)
     response.to_s
-  end
-
-  not_found do
-    status 404
-    erb :not_found
-  end
-
-  def unauthorized
-    status 401
-    erb :not_allow
-  end
-
-  def valid_token?(request)
-    token = request.env['HTTP_AUTHORIZATION']
-    token == ENV['SECRET_TOKEN']
   end
 end

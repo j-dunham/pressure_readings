@@ -5,13 +5,13 @@ ENV['DATABASE_URL'] = 'sqlite://test.db'
 require 'rspec'
 require 'rack/test'
 require 'sequel'
-require_relative '../app/server'
+require_relative '../app/controllers/app_controller'
 
 describe 'the server' do
   include Rack::Test::Methods
 
   def app
-    Server
+    AppController
   end
 
   describe 'when calling /' do
