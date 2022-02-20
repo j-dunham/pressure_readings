@@ -33,7 +33,7 @@ class AppController < Sinatra::Base
       redirect '/'
     end
 
-    @message = 'Not Found..'
+    @message = 'Nope..'
     erb :login
   end
 
