@@ -2,7 +2,6 @@
 
 require 'rack'
 require 'sinatra/base'
-require 'sinatra/reloader'
 require 'sequel'
 require 'twilio-ruby'
 require 'bcrypt'
@@ -36,16 +35,28 @@ class PressureController < AppController
 
   post '/twilio/message' do
     content_type 'text/xml'
-    if params['Body'][0..3].match?(/[0-9]+/)
-      systolic, diastolic = params['Body'].split(',')
-      PressureReading.create(systolic: systolic, diastolic: diastolic, user_id: ENV['DEFAULT_USER_ID'])
-      message = 'Saved'
-    elsif params['Body'].casecmp('last')
-      reading = PressureReading.order(:created_at).last
-      message = "#{reading.systolic}/#{reading.diastolic}"
-    end
+    save_reading if save_request?
+
+    twilio_response(message: last_readings(10))
+  end
+
+  def twilio_response(message:)
     response = Twilio::TwiML::MessagingResponse.new
     response.message(body: message)
     response.to_s
+  end
+
+  def last_readings(limit)
+    readings = PressureReading.order(:created_at).limit(limit).reverse
+    readings.map { |reading| "#{reading.systolic}/#{reading.diastolic}" }.join(' || ')
+  end
+
+  def save_request?
+    params['Body'][0..3].match?(/[0-9]+/)
+  end
+
+  def save_reading
+    systolic, diastolic = params['Body'].split(',')
+    PressureReading.create(systolic: systolic, diastolic: diastolic, user_id: ENV['DEFAULT_USER_ID'])
   end
 end

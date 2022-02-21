@@ -10,6 +10,8 @@ require_relative '../db/models'
 
 class AppController < Sinatra::Base
   configure do
+    register Sinatra::Reloader if development?
+
     enable :sessions
     set :public_folder, 'app/static'
     set :views, 'app/views'
