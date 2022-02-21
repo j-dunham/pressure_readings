@@ -38,7 +38,7 @@ class PressureController < AppController
     content_type 'text/xml'
     if params['Body'][0..3].match?(/[0-9]+/)
       systolic, diastolic = params['Body'].split(',')
-      PressureReading.create(systolic: systolic, diastolic: diastolic)
+      PressureReading.create(systolic: systolic, diastolic: diastolic, user_id: ENV['DEFAULT_USER_ID'])
       message = 'Saved'
     elsif params['Body'].casecmp('last')
       reading = PressureReading.order(:created_at).last
