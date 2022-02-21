@@ -27,7 +27,7 @@ class AppController < Sinatra::Base
 
   get '/' do
     content_type 'text/html'
-    @message = "Welcome<br> To <br>Null Island<br>#{current_user}"
+    @message = "Welcome<br>#{current_user}"
     erb :index, { locals: { is_logged_in: !current_user.nil? } }
   end
 

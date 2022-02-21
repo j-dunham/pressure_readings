@@ -12,7 +12,7 @@ require_relative '../db/models'
 class PressureController < AppController
   use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/twilio'
 
-  get '/pressure_reading' do
+  get '/pressure_readings' do
     redirect '/' unless current_user
 
     @readings = PressureReading.all
@@ -20,14 +20,14 @@ class PressureController < AppController
     erb :readings
   end
 
-  post '/api/pressure_reading' do
+  post '/api/pressure_readings' do
     return unauthorized unless valid_token? request
 
     PressureReading.create(**request.params)
     201
   end
 
-  delete '/api/pressure_reading/:id' do |id|
+  delete '/api/pressure_readings/:id' do |id|
     return unauthorized unless valid_token? request
 
     PressureReading[id]&.delete

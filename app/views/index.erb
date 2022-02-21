@@ -4,9 +4,9 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <% if is_logged_in %>
-          <a class="nav-link text-muted" href="/logout">/logout</a>
+          <a class="nav-link text-muted" href="/logout"><span class="material-icons">logout</span></a>
         <% else %>
-          <a class="nav-link text-primary" href="/login">/login</a>
+          <a class="nav-link text-primary" href="/login"><span class="material-icons">login</span></a>
         <% end %>
       </li>
     </ul>
@@ -14,5 +14,5 @@
 </nav>
 <body>
 <h1><%= @message %></h1>
-<span class="material-icons md-60">filter_drama</span>
+<span class="material-icons md-60">bloodtype</span>
 </body>
