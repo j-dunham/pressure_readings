@@ -18,8 +18,12 @@ class AppController < Sinatra::Base
   end
 
   helpers do
-    def current_user
+    def current_username
       session[:username]
+    end
+
+    def current_user_id
+      session[:user_id]
     end
 
     def valid_token?(request)
@@ -29,8 +33,8 @@ class AppController < Sinatra::Base
 
   get '/' do
     content_type 'text/html'
-    @message = "Welcome<br>#{current_user}"
-    erb :index, { locals: { is_logged_in: !current_user.nil? } }
+    @message = "Welcome<br>#{current_username}"
+    erb :index, { locals: { is_logged_in: !current_username.nil? } }
   end
 
   get '/login' do
@@ -41,6 +45,7 @@ class AppController < Sinatra::Base
     @user = User.where(username: params[:username]).first
     if @user && BCrypt::Password.new(@user.password) == params[:password]
       session[:username] = @user.username
+      session[:user_id] = @user.id
       redirect '/'
     end
 
