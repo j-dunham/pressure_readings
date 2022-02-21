@@ -16,13 +16,16 @@ end
 
 DB.create_table? :pressure_readings do
   primary_key :id
+  foreign_key :user_id, :users, null: false
   column :systolic, String
   column :diastolic, String
   column :created_at, 'timestamp with time zone', default: Sequel.function(:now)
 end
 
 class User < Sequel::Model
+  one_to_many :pressure_readings
 end
 
 class PressureReading < Sequel::Model
+  many_to_one :user
 end

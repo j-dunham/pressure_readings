@@ -14,4 +14,5 @@ gem 'twilio-ruby'
 group :development do
   gem 'rspec'
   gem 'sqlite3'
+  gem 'rubocop'
 end
