@@ -17,8 +17,7 @@ jobs:
     - uses: "./.github/actions/deploy_via_git"
       timeout-minutes: 10
       with:
-        branch: ""
-        tag: v0.2
+        branch: "main"
         api_key: "${{ secrets.HEROKU_API_KEY }}"
         app_name: pressure-readings
         maintenance_mode: true
