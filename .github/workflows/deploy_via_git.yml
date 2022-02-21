@@ -20,5 +20,5 @@ jobs:
         branch: ""
         tag: v0.2
         api_key: "${{ secrets.HEROKU_API_KEY }}"
-        app_name: nullisland
+        app_name: pressure-readings
         maintenance_mode: true
