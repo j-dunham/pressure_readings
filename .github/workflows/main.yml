@@ -4,19 +4,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - name: run tests
-        run: bundle exec rspec
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+#         with:
+#           ruby-version: 2.7
+#           bundler-cache: true
+#       - name: run tests
+#         run: bundle exec rspec
   deploy:
-    needs: test 
+#     needs: test 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
