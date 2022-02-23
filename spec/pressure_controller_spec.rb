@@ -70,7 +70,7 @@ describe 'pressure controller' do
       end
 
       it 'returns successful' do
-        env 'rack.session', { username: 'matz', user_id: 1 }
+        env 'rack.session', { username: 'matz', user_id: '1' }
         post '/pressure_reading', { 'systolic' => '140', 'diastolic' => '80', 'created_at' => DateTime.now }
         expect(last_response).to be_redirect
         follow_redirect!
