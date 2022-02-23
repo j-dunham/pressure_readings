@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ENV['DATABASE_URL'] = 'sqlite://test.db'
+ENV['APP_ENV'] = 'testing'
 
 require 'rspec'
 require 'rack/test'

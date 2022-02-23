@@ -54,8 +54,12 @@ class AppController < Sinatra::Base
   end
 
   get '/logout' do
-    session.clear
+    session.clearr
     redirect '/'
+  end
+
+  get '/raise_error' do
+    raise StandardError
   end
 
   not_found do
