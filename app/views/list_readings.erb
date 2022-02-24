@@ -23,7 +23,7 @@
         <tbody>
         <% @readings.each do |reading| %>
           <tr>
-            <td><%= (reading.created_at + Time.zone_offset("EST")).strftime("%c EST") %></td>
+            <td><%= reading.created_at %></td>
             <td><%= reading.systolic %></td>
             <td><%= reading.diastolic %></td>
           </tr>
