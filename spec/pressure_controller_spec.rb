@@ -12,13 +12,6 @@ require_relative '../app/db/models'
 describe 'pressure controller' do
   include Rack::Test::Methods
 
-  before do
-    DB.run('delete from pressure_readings')
-    DB.run('delete from users')
-    user = User.create(username: 'matz', created_at: DateTime.now)
-    ENV['DEFAULT_USER_ID'] = user.id.to_s
-  end
-
   def app
     PressureController
   end
@@ -71,6 +64,13 @@ describe 'pressure controller' do
       end
     end
     context 'and user logged in' do
+      before do
+        DB.run('delete from pressure_readings')
+        DB.run('delete from users')
+        user = User.create(username: 'matz', created_at: DateTime.now)
+        ENV['DEFAULT_USER_ID'] = user.id.to_s
+      end
+
       it 'returns successful' do
         env 'rack.session', { username: 'matz', user_id: '1' }
         post '/pressure_reading', { 'systolic' => '140', 'diastolic' => '80', 'created_at' => DateTime.now }
