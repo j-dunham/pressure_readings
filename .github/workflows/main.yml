@@ -11,7 +11,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
         with:
-          ruby-version: 2.7.3
+          ruby-version: 2.7.2
           bundler-cache: true
       - name: run tests
         run: bundle exec rspec
