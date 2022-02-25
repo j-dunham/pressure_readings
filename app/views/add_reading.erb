@@ -1,16 +1,5 @@
-<%= erb :header %>
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-fluid">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link text-success" href="/"><span class="material-icons">cabin</span></a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<body>
-<div class="container">
-  <h1>Add Reading</h1>
+<div class="container" id="add-reading">
+  <hr>
   <% if @message %>
     <p class="text-danger"><%= @message %></p>
   <% end %>
@@ -25,9 +14,14 @@
           <label for="diastolic" class="form-label">Diastolic</label>
           <input type="number" class="form-control" name="diastolic" id="diastolic">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+        <div class="btn btn-secondary" onclick="removeAddReading()">Cancel</div>
       </form>
     </div>
   </div>
 </div>
-</body>
+<script>
+  function removeAddReading(){
+    document.getElementById('add-reading').remove();
+  }
+</script>

@@ -11,7 +11,10 @@
 <body>
 <div class="container">
   <h1>Readings</h1>
-  <div><a href="/add_reading"><span class="material-icons text-success">add_circle_outline</span></a>Add Reading</div>
+  <div hx-get="/add_reading" hx-target=".addTarget"><span class="material-icons text-success">add_circle_outline</span>Add
+    Reading
+  </div>
+  <div class="addTarget"></div>
   <div class="row">
     <div class="md-6">
       <table class="table table-sm table-striped">

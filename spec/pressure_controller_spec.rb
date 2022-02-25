@@ -49,7 +49,7 @@ describe 'pressure controller' do
         env 'rack.session', { username: 'matz', user_id: 1 }
         get '/add_reading'
         expect(last_response).to be_ok
-        expect(last_response.body).to include('<h1>Add Reading</h1>')
+        expect(last_response.body).to include('<div class="container" id="add-reading">')
       end
     end
   end
