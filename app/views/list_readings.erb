@@ -26,6 +26,11 @@
             <td><%= reading.created_at %></td>
             <td><%= reading.systolic %></td>
             <td><%= reading.diastolic %></td>
+            <td>
+              <div class="btn" hx-delete="/pressure_reading/<%= reading.id %>" hx-target="body">
+                <span class="material-icons">remove_circle</span>
+              </div>
+            </td>
           </tr>
         <% end %>
         </tbody>

@@ -32,11 +32,11 @@ class PressureController < AppController
     redirect :list_readings
   end
 
-  delete '/api/pressure_reading/:id' do |id|
-    return unauthorized unless valid_token? request
+  delete '/pressure_reading/:id' do |id|
+    redirect '/' unless current_username
 
     PressureReading[id]&.delete
-    200
+    redirect :list_readings
   end
 
   post '/twilio/message' do
