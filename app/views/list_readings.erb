@@ -27,8 +27,16 @@
         <% @readings.each do |reading| %>
           <tr>
             <td><%= reading.created_at %></td>
-            <td><%= reading.systolic %></td>
-            <td><%= reading.diastolic %></td>
+            <% if reading.systolic.to_i > 130 %>
+              <td class="text-danger"><%= reading.systolic %></td>
+            <% else %>
+              <td><%= reading.systolic %></td>
+            <% end %>
+            <% if reading.diastolic.to_i > 90 %>
+              <td class="text-danger"><%= reading.diastolic %></td>
+            <% else %>
+              <td><%= reading.diastolic %></td>
+            <% end %>
             <td>
               <div class="btn" hx-delete="/pressure_reading/<%= reading.id %>" hx-target="body">
                 <span class="material-icons text-danger">remove_circle_outline</span>
