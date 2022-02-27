@@ -1,5 +1,4 @@
 <div class="row">
-  <div> Summary for readings since <%= (Date.today - 5) %></div>
   <div class="md-6 d-flex justify-content-center">
     <div class="card" style="width: 18rem;">
       <div class="card-body">
@@ -11,6 +10,20 @@
       <div class="card-body">
         <h5 class="card-title"><%= @diastolic_average %></h5>
         <h6 class="card-subtitle mb-2 text-muted">Average Diastolic</h6>
+      </div>
+    </div>
+  </div>
+  <div class="md-6 d-flex justify-content-center">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= @systolic_max %></h5>
+        <h6 class="card-subtitle mb-2 text-muted">Max Systolic</h6>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= @diastolic_max %></h5>
+        <h6 class="card-subtitle mb-2 text-muted">Max Diastolic</h6>
       </div>
     </div>
   </div>

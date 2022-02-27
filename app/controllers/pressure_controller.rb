@@ -27,10 +27,18 @@ class PressureController < AppController
 
   get '/reading_summary' do
     redirect '/' unless current_username
-    @count = DB[:pressure_readings].where { created_at > (Date.today - 5) }.all.count
-    @systolic_average = DB[:pressure_readings].where { created_at > (Date.today - 5) }.sum(:systolic) / @count
-    @diastolic_average = DB[:pressure_readings].where { created_at > (Date.today - 5) }.sum(:diastolic) / @count
-    erb :read_summary
+
+    days_before_today = params['days'].to_i
+    @count = DB[:pressure_readings].where { created_at > (Date.today - 5) }.count
+    @systolic_max = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.max(:systolic)
+    @diastolic_max = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.max(:diastolic)
+    @systolic_average = DB[:pressure_readings].where do
+      created_at > (Date.today - days_before_today)
+    end.sum(:systolic) / @count
+    @diastolic_average = DB[:pressure_readings].where do
+      created_at > (Date.today - days_before_today)
+    end.sum(:diastolic) / @count
+    erb :read_summary, locals: { days: days_before_today }
   end
 
   post '/pressure_reading' do
