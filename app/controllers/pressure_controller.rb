@@ -25,6 +25,15 @@ class PressureController < AppController
     erb :add_reading
   end
 
+  get '/reading_summary' do
+    redirect '/' unless current_username
+
+    @limit = 5
+    @systolic_average = PressureReading.reverse(:created_at).limit(@limit).sum(:systolic) / @limit
+    @diastolic_average = PressureReading.reverse(:created_at).limit(@limit).sum(:diastolic) / @limit
+    erb :read_summary
+  end
+
   post '/pressure_reading' do
     redirect '/' unless current_username
 

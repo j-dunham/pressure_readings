@@ -17,8 +17,8 @@ end
 DB.create_table? :pressure_readings do
   primary_key :id
   foreign_key :user_id, :users, null: false
-  column :systolic, String
-  column :diastolic, String
+  column :systolic, Integer
+  column :diastolic, Integer
   column :created_at, 'timestamp with time zone', default: Sequel.function(:now)
 end
 

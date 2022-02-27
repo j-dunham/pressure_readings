@@ -16,6 +16,8 @@
 <h1><%= @message %></h1>
 <span class="material-icons md-60">bloodtype</span>
 <% if is_logged_in %>
-  <div><a href="/list_readings"><span class="material-icons">table_view</span></a> View readings </div>
+  <div><a href="/list_readings"><span class="material-icons">table_view</span></a> View readings</div>
+  <br>
+  <div hx-get="/reading_summary" hx-trigger="load"></div>
 <% end %>
 </body>
