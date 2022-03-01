@@ -29,7 +29,7 @@ class PressureController < AppController
     redirect '/' unless current_username
 
     days_before_today = params['days'].to_i
-    @count = DB[:pressure_readings].where { created_at > (Date.today - 5) }.count
+    @count = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.count
     @systolic_max = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.max(:systolic)
     @diastolic_max = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.max(:diastolic)
     @systolic_average = DB[:pressure_readings].where do

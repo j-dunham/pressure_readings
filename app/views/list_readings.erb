@@ -1,5 +1,5 @@
 <%= erb :header %>
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -9,6 +9,7 @@
   </div>
 </nav>
 <body>
+<br>
 <div class="container">
   <h1>Readings</h1>
   <div hx-get="/add_reading" hx-target=".addTarget"><span class="material-icons text-success">add_circle_outline</span>Add
