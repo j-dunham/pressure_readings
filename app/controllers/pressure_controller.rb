@@ -14,7 +14,7 @@ class PressureController < AppController
   get '/list_readings' do
     redirect '/' unless current_username
 
-    @readings = PressureReading.all.reverse
+    @readings = PressureReading.where(user_id: current_user_id).all.reverse
 
     erb :list_readings
   end
@@ -29,9 +29,13 @@ class PressureController < AppController
     redirect '/' unless current_username
 
     days_before_today = params['days'].to_i
-    @count = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.count
-    @systolic_max = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.max(:systolic)
-    @diastolic_max = DB[:pressure_readings].where { created_at > (Date.today - days_before_today) }.max(:diastolic)
+    @count = DB[:pressure_readings].where(user_id: 4).where { created_at > (Date.today - days_before_today) }.count
+    @systolic_max = DB[:pressure_readings].where(user_id: 4).where do
+      created_at > (Date.today - days_before_today)
+    end.max(:systolic)
+    @diastolic_max = DB[:pressure_readings].where(user_id: 4).where do
+      created_at > (Date.today - days_before_today)
+    end.max(:diastolic)
     @systolic_average = DB[:pressure_readings].where do
       created_at > (Date.today - days_before_today)
     end.sum(:systolic) / @count
