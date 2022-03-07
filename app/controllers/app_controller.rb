@@ -58,8 +58,17 @@ class AppController < Sinatra::Base
   end
 
   post '/sign_up' do
-    @message = params['access_code'] == ENV['ACCESS_CODE'] ? 'Created!' : 'Try Again..'
-
+    begin
+      if params['access_code'] == ENV['ACCESS_CODE']
+        password = BCrypt::Password.create(params['password'])
+        user = User.create(username: params['username'], password: password)
+        @message = 'Create'
+      else
+        @message = 'Try again..'
+      end
+    rescue Sequel::Error
+      @message = 'Try again..'
+    end
     erb :sign_up
   end
 

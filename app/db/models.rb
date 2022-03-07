@@ -9,7 +9,7 @@ DB = Sequel.connect(ENV['DATABASE_URL'])
 
 DB.create_table? :users do
   primary_key :id
-  column :username, String
+  column :username, String, unique: true
   column :password, String
   column :created_at, 'timestamp with time zone', default: Sequel.function(:now)
 end
