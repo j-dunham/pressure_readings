@@ -11,13 +11,17 @@
 <br>
 <body>
 <div class="container">
-  <h1>Login</h1>
+  <h1>Sign-Up</h1>
   <% if @message %>
     <p class="text-danger"><%= @message %></p>
   <% end %>
   <div class="row">
     <div class="md-6 d-flex justify-content-center">
-      <form action="/login" method="POST">
+      <form action="/sign_up" method="POST">
+        <div class="mb-3">
+          <label for="access_code" class="form-label">Access Code</label>
+          <input type="text" class="form-control" id="access_code" name="access_code" aria-describedby="access_code">
+        </div>
         <div class="mb-3">
           <label for="username" class="form-label">User Name</label>
           <input type="text" class="form-control" id="username" name="username" aria-describedby="username">
@@ -30,6 +34,5 @@
       </form>
     </div>
   </div>
-  <div class="row justify-content-center"><a class="col-2 btn text-secondary" href="/sign_up">Sign-Up</a></div>
 </div>
 </body>

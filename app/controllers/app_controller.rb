@@ -41,6 +41,10 @@ class AppController < Sinatra::Base
     erb :login
   end
 
+  get '/sign_up' do
+    erb :sign_up
+  end
+
   post '/login' do
     @user = User.where(username: params[:username]).first
     if @user && BCrypt::Password.new(@user.password) == params[:password]
@@ -51,6 +55,12 @@ class AppController < Sinatra::Base
 
     @message = 'Nope..'
     erb :login
+  end
+
+  post '/sign_up' do
+    @message = params['access_code'] == ENV['ACCESS_CODE'] ? 'Created!' : 'Try Again..'
+
+    erb :sign_up
   end
 
   get '/logout' do
