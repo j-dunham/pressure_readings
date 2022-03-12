@@ -67,13 +67,13 @@ describe 'pressure controller' do
       before do
         DB.run('delete from pressure_readings')
         DB.run('delete from users')
-        user = User.create(username: 'matz', created_at: DateTime.now)
+        user = User.create(username: 'matz', created_at: Time.now)
         ENV['DEFAULT_USER_ID'] = user.id.to_s
       end
 
       it 'returns successful' do
         env 'rack.session', { username: 'matz', user_id: '1' }
-        post '/pressure_reading', { 'systolic' => '140', 'diastolic' => '80', 'created_at' => DateTime.now }
+        post '/pressure_reading', { 'systolic' => '140', 'diastolic' => '80', 'created_at' => Time.now }
         expect(last_response).to be_redirect
         follow_redirect!
         expect(last_response.body).to include('<h1>Readings</h1>')
