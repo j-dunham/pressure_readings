@@ -27,7 +27,7 @@
         <tbody>
         <% @readings.each do |reading| %>
           <tr>
-            <td><%= reading.created_at %></td>
+            <td><%= reading.created_at.asctime %></td>
             <% if reading.systolic.to_i > 130 %>
               <td class="text-danger"><%= reading.systolic %></td>
             <% else %>
@@ -45,7 +45,7 @@
             </td>
           </tr>
         <% end %>
-        </tbody>
+        </tbody>q
       </table>
     </div>
   </div>
