@@ -61,7 +61,7 @@ class AppController < Sinatra::Base
     begin
       if params['access_code'] == ENV['ACCESS_CODE']
         password = BCrypt::Password.create(params['password'])
-        user = User.create(username: params['username'], password: password)
+        User.create(username: params['username'], password: password)
         @message = 'Create'
       else
         @message = 'Try again..'
